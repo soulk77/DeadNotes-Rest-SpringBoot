@@ -40,7 +40,7 @@ public class RegisterController {
             return null;
         }
         Map<String,Object> map = new HashMap<>();
-//        password = cryptoConverter.encrypt(password);
+        password = cryptoConverter.encrypt(password);
         userRepository.save(new User(username,password,email));
         user = userRepository.findByUsername(username);
         String uuid = UUID.randomUUID().toString();

@@ -34,7 +34,7 @@ public class LoginController {
     public Map<String, Object> login(HttpServletRequest request) {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-//        password = cryptoConverter.encrypt(password);
+        password = cryptoConverter.encrypt(password);
         User user = userRepository.findByUsernameAndPassword(username, password);
         if (user != null) {
             String uuid = UUID.randomUUID().toString();
