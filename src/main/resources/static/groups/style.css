@@ -1,0 +1,164 @@
+html {
+    width: 100%;
+    height: 100%;
+
+}
+
+body {
+    background-image: url('img/notes.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    font-family: 'Mali', cursive;
+
+}
+
+button:focus {
+    outline: 0;
+}
+
+p {
+    font-family: 'Mali', cursive;
+}
+
+
+.bubble {
+    /* display: inline-block; */
+    border: 2px solid transparent;
+    border-radius: 50%;
+    height: 180px;
+    width: 180px;
+    background: #d35400;
+    margin: 10px;
+    box-shadow: 0 5px 8px rgb(0, 0, 0);
+    overflow: hidden;
+    position: relative;
+    opacity: 0.85;
+
+}
+
+.add i {
+    transition: 0.2s linear;
+    color: #34495e;
+}
+
+.bubble p {
+    transition: 0.2s linear;
+}
+
+.bubble:hover i,
+.bubble:hover p {
+    transform: scale(1.3);
+    color: #d35400;
+}
+
+.bubble::before {
+    content: "";
+    position: absolute;
+    width: 120%;
+    height: 120%;
+    background: #34495e;
+    transform: rotate(45deg);
+    left: -110%;
+    top: 90%;
+}
+
+.bubble:hover::before {
+    animation: aaa 0.7s 1;
+    top: -10%;
+    left: -10%;
+}
+
+@keyframes aaa {
+    0% {
+        left: -110%;
+        top: 90%;
+    }
+
+    50% {
+        left: 20%;
+        top: -40%;
+    }
+
+    100% {
+        top: -10%;
+        left: -10%;
+    }
+
+}
+
+.lg {
+    width: 80px;
+    opacity: 0.5;
+    -webkit-transition-duration: 0.8s;
+    -moz-transition-duration: 0.8s;
+    -o-transition-duration: 0.8s;
+    transition-duration: 0.8s;
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    -o-transition-property: -o-transform;
+    transition-property: transform;
+    overflow: hidden;
+}
+
+.lg:hover {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+
+}
+
+.nav-link {
+    border-bottom: 2px solid transparent;
+}
+
+.nav-link:hover {
+    border-bottom: 2px solid #d35400;
+}
+
+.bubble:focus {
+    outline: none;
+}
+
+
+/****** MODAL ******/
+/*.modal-content {*/
+    /*width: 450px !important;*/
+    /*background-color: #34495e !important;*/
+    /*background-image: url('img/LogoMakr_4n87LN.png') !important;*/
+    /*background-size: contain  !important;*/
+    /*background-repeat: no-repeat !important;*/
+    /*opacity: 0.9;*/
+    /*color: white !important;*/
+/*}*/
+
+/***** Scroll bar *****/
+.scroller {
+    height: 400px;
+    max-width: 500px !important;
+    overflow-y: scroll;
+    scrollbar-color: transparent transparent;
+    scrollbar-width: thin;
+    /* overflow: hidden; */
+}
+
+.scroller:hover {
+    overflow-y: scroll;
+    border-radius: 15px;
+    scrollbar-color: rgba(160, 160, 160, 0.26) transparent;
+}
+
+.scroller::-webkit-scrollbar {
+    width: 15px;
+    height: 15px;
+}
+
+.scroller::-webkit-scrollbar-track-piece {
+    background-color: #C2D2E4;
+}
+
+.scroller::-webkit-scrollbar-thumb:vertical {
+    height: 30px;
+    background-color: #0A4C95;
+}
