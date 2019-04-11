@@ -27,7 +27,7 @@ public class EmailHelper {
 
         message.setTo("thanos.pap.dev@gmail.com");
         message.setSubject("test");
-        message.setText("test body of email");
+        message.setText("test body of the email");
         javaMailSender.send(message);
 
     }
