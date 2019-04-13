@@ -21,12 +21,8 @@ public class EmailController {
 
     @PostMapping("/sendEmail/{id}")
     public int sendEmail(@PathVariable("id") int id){
-        System.out.println(id - 300);
-        System.out.println("1");
         Task task = taskRepository.getOne(id);
-        System.out.println("2");
-        System.out.println(task);
-        emailHelper.sendSimpleMessage(task);
+//        emailHelper.sendSimpleMessage(task);
         return id;
     }
 

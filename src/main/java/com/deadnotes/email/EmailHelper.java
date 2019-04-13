@@ -23,13 +23,10 @@ public class EmailHelper {
 
         SimpleMailMessage message = new SimpleMailMessage();
 //        message.setTo(receiverEmail);
-//        message.setSubject(taskTitle +": Update");
 
-        message.setTo("thanos.pap.dev@gmail.com");
         message.setSubject(taskTitle +": Update");
         message.setText("The task is completed, please review,\n\n Thank you,\n"+sender);
 
-//        message.setText("e-mail body");
         javaMailSender.send(message);
 
     }

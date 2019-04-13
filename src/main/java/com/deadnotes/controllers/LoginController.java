@@ -42,6 +42,7 @@ public class LoginController {
             tokenRepository.save(token);
             Map<String, Object> map = new HashMap<>();
             map.put("token",token);
+            map.put("username",user.getUsername());
             return map;
         }
         return null;

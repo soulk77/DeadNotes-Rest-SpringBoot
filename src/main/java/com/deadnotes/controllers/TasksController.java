@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -22,30 +23,71 @@ public class TasksController {
     private UserRepository userRepository;
     private GroupRepository groupRepository;
     private TaskRepository taskRepository;
-    private EmailHelper emailHelper;
 
-    public TasksController(UserRepository userRepository, GroupRepository groupRepository, TaskRepository taskRepository, EmailHelper emailHelper) {
+
+    public TasksController(UserRepository userRepository, GroupRepository groupRepository, TaskRepository taskRepository) {
         this.userRepository = userRepository;
         this.groupRepository = groupRepository;
         this.taskRepository = taskRepository;
-        this.emailHelper = emailHelper;
+
     }
 
+//    @PostMapping("/ssss")
+//    public Long sss() {
+//        Date date = new Date(System.currentTimeMillis() - 24 * 3600 * 1000);
+//        System.out.println(date.getTime());
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//
+//        try {
+//            java.sql.Date currentTime = new java.sql.Date(date.getTime());
+//            System.out.println(currentTime);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return date.getTime();
+//    }
+
+
     @PutMapping("task/completed/{id}")
-    public int markAsCompleted(@PathVariable("id") int id){
+    public int markAsCompleted(@PathVariable("id") int id) {
         Task task = taskRepository.getOne(id);
         task.setStatus(4);
         taskRepository.save(task);
-//        emailHelper.sendSimpleMessage(task);
         return id;
     }
 
     @DeleteMapping("/task/{id}")
-    public int deleteExpireAndCompletedTasks(@PathVariable("id") int id){
+    public int deleteExpireAndCompletedTasks(@PathVariable("id") int id) {
 
         taskRepository.deleteById(id);
 
-        return id ;
+        return id;
+    }
+
+    @DeleteMapping("tasks/clear/{id}")
+    public int clearTasks(@PathVariable("id") int id) {
+        Group group = groupRepository.getOne(id);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date(System.currentTimeMillis() - 48 * 3600 * 1000);
+        Date dateFixed;
+        java.sql.Date currentTime = null;
+        java.sql.Date fixedTime = null;
+        String dateString = "1000-01-01";
+        try {
+            currentTime = new java.sql.Date(date.getTime());
+            dateFixed = formatter.parse(dateString);
+            fixedTime = new java.sql.Date(dateFixed.getTime());
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("problem with time formatter");
+        }
+        List<Task> expired = taskRepository.getAllByTasksGroupAndStatusAndDeadlineBetweenOrderByTimeCreated(
+                group, 1, fixedTime, currentTime);
+        taskRepository.deleteAll(expired);
+        List<Task> completed = taskRepository.getAllByTasksGroupAndStatusOrderByTimeCreated(group, 4);
+        taskRepository.deleteAll(completed);
+        return id;
     }
 
 
@@ -56,7 +98,7 @@ public class TasksController {
         int status = Integer.parseInt(request.getParameter("status"));
         Group group = groupRepository.getOne(id_group);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
+        Date date = new Date(System.currentTimeMillis() - 48 * 3600 * 1000);
         Date dateFixed;
         java.sql.Date currentTime = null;
         java.sql.Date fixedTime = null;
@@ -70,14 +112,14 @@ public class TasksController {
         }
         if (status == 1) {
             return taskRepository.getAllByTasksGroupAndStatusAndDeadlineGreaterThanOrderByTimeCreated(
-                    group,1,currentTime);
+                    group, 1, currentTime);
         } else if (status == 2) {
             return taskRepository.getAllByTasksGroupAndStatusOrderByTimeCreated(group, status);
         } else if (status == 3) {
             return taskRepository.getAllByTasksGroupAndStatusAndDeadlineBetweenOrderByTimeCreated(
                     group, 1, fixedTime, currentTime);
-        }else if (status == 4){
-            return taskRepository.getAllByTasksGroupAndStatusOrderByTimeCreated(group,status);
+        } else if (status == 4) {
+            return taskRepository.getAllByTasksGroupAndStatusOrderByTimeCreated(group, status);
         }
         return null;
     }
@@ -108,8 +150,6 @@ public class TasksController {
 
         return tasks;
     }
-
-
 
 
 }

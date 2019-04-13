@@ -87,7 +87,7 @@ public class GroupsController {
         User user = userRepository.findByUsername(username);
         Group group = groupRepository.getOne(id_group);
         List<User> userList = group.getGroupUsers();
-        userList.remove(user);
+//        userList.remove(user);
         map.put("userList", userList);
         map.put("creator", group.getGroupCreator().getUsername());
         return map;
@@ -106,7 +106,7 @@ public class GroupsController {
             userList.add(user);
             group.setGroupUsers(userList);
             groupRepository.save(group);
-            userList.remove(group.getGroupCreator());
+//            userList.remove(group.getGroupCreator());
             return userList;
         }
         return null;
@@ -124,7 +124,7 @@ public class GroupsController {
             userList.remove(user);
             group.setGroupUsers(userList);
             groupRepository.save(group);
-            userList.remove(group.getGroupCreator());
+//            userList.remove(group.getGroupCreator());
             return userList;
         }
         return null;
